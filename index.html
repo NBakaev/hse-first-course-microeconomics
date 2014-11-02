@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="en" ng-app="myApp" class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Создание заданий по микроэкономике</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="bower_components/html5-boilerplate/css/normalize.css">
+    <link rel="stylesheet" href="bower_components/html5-boilerplate/css/main.css">
+    <link rel="stylesheet" href="css/app.css"/>
+    <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
+
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="saved/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/app.css/">
+
+    <!--<script type="text/javascript"-->
+            <!--src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">-->
+    <!--</script>-->
+
+
+    <script src="saved/jquery-2.1.1.min.js"></script>
+
+    <script src="saved/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+<div class="container">
+
+
+    <div class="content"></div>
+
+    <div ng-view></div>
+
+
+</div>
+
+
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<script src="js/app.js"></script>
+
+
+
+<!--<script type="text/ng-template" id="partials/partial1.html" src="partials/partial1.html"> </script>-->
+<!--<script type="text/ng-template" id="partials/partial2.html" src="partials/partial2.html"> </script>-->
+
+
+<script type="text/ng-template" id="partials/partial1.html">
+
+
+<div class="jumbotron">
+    <h1>Мастер создания заданий</h1>
+
+    <p>по микроэкономике</p>
+
+    <br>
+    <br>
+    Инструкция: выбрать понравивившиеся задания, нажав "+". Кнопка сменит цвет на красный. Затем выбрать
+    необходимое число работ. Затем вы увидете необходимое число работ с вариатами и после таблицу с ответами.
+    <br>
+
+    <div ng-controller="printAllTaskCtrl">
+        <table>
+            <tr>
+                <td> Количество вариантов работ: &nbsp; </td>
+                <td>
+                    <form><input size="4" name="dsd" ng-model="numbers"/></form>
+                </td>
+            </tr>
+        </table>
+
+
+        <br>
+        <table>
+            <tr>
+
+                <td>
+                    <!--<a href="#view2" ng-click="setNumbers()" class="btn btn-success" disabled id="500">Выберите задания из списка</a> <br/>-->
+                    <a href="#view2" ng-click="setNumbers()" class="btn btn-success" disabled id="400">Создать выбранные
+                        задания + ответы</a> <br/>
+
+                </td>
+
+                <td>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#myModal"> Видеоинструкция</button>
+                </td>
+
+            </tr>
+        </table>
+
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Видеоинструкция</h4>
+                </div>
+                <div class="modal-body">
+                    <iframe class="youtube-player" type="text/html" width="540" height="385"
+                            src="http://www.youtube.com/embed/k3IFZGjUOyM" allowfullscreen frameborder="0">
+                        <!--src="http://www.youtube.com/embed/RirqnBUQTEU" allowfullscreen frameborder="0">-->
+
+
+                    </iframe>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--///////////////////////////////////////////////////////////-->
+
+</div>
+
+
+<!--///////////////// First-->
+<div class="jumbotron">
+    <table>
+        <tr>
+
+            <td>
+                <button class="btn btn-success" ng-click="addTask(1)" id="1"> +</button>
+            </td>
+
+            <td>  &nbsp;</td>
+            <td> 1.</td>
+
+
+            <td>  &nbsp;</td>
+            <td>
+                <div ng-controller="MyCtrl1">
+                    <div  ng-bind-html="to_trusted(text)"></div>
+                    <b> Ответ: </b>
+
+                    <div ng-bind-html="to_trusted(answerText)"></div>
+                    <br>
+                    <b> Числовой ответ: {{answerNumber}}</b>
+
+                </div>
+            </td>
+
+        </tr>
+
+    </table>
+</div>
+
+
+<!--///////////////////////////////////////////////////////-->
+
+<div class="jumbotron">
+    <table>
+        <tr>
+
+            <td>
+                <button class="btn btn-success" ng-click="addTask(2)" id="2"> +</button>
+            </td>
+
+            <td>  &nbsp;</td>
+            <td> 2.</td>
+
+            <td>
+                <div ng-controller="MyCtrl2">
+                    <div  ng-bind-html="to_trusted(text)"></div>
+                    <b> Решение: </b>
+
+                    <div ng-bind-html="to_trusted(answerText)"></div>
+                    <br>
+                    <b> Числовой ответ: {{answerNumber}}</b>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+</div>
+
+
+<div class="jumbotron">
+    <table>
+        <tr>
+
+            <td>
+                <button class="btn btn-success" ng-click="addTask(3)" id="3"> +</button>
+            </td>
+
+            <td>  &nbsp;</td>
+            <td> 3.</td>
+
+            <td>
+                <div ng-controller="MyCtrl3">
+                    <div  ng-bind-html="to_trusted(text)"></div>
+                    <b> Решение: </b>
+
+                    <div ng-bind-html="to_trusted(answerText)"></div>
+                    <br>
+                    <b> Числовой ответ: ответ: AC={{ac}}, MC={{mc}}, Q={{q}}</b>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+<!--////////////////////////////////////////////-->
+<div class="jumbotron">
+    <table>
+        <tr>
+            <td>
+                <button class="btn btn-success" ng-click="addTask(4)" id="4"> +</button>
+            </td>
+
+            <td>  &nbsp;</td>
+            <td> 4.</td>
+            <td>
+                <div ng-controller="MyCtrl4">
+                    <div  ng-bind-html="to_trusted(text)"></div>
+                    <b> Решение: </b>
+
+                    <div ng-bind-html="to_trusted(answerText)"></div>
+                    <br>
+                    <b> Числовой ответ: ответ: P = {{answerNumber}}</b>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div class="jumbotron">
+    <table>
+        <tr>
+            <td>
+                <button class="btn btn-success" ng-click="addTask(5)" id="5"> +</button>
+            </td>
+
+            <td>  &nbsp;</td>
+            <td> 5.</td>
+            <td>
+                <div ng-controller="MyCtrl5">
+                    <div ng-bind-html="to_trusted(text)"></div>
+
+                    <b> Решение: </b>
+
+                    <div ng-bind-html="to_trusted(answerText)"></div>
+
+
+                    <!--<div ng-bind-html="to_trusteed(resultHTML)"></div>-->
+
+
+                    <!--<div mathjax-bind="answerText"></div>-->
+                    <br>
+                    <b> Числовой ответ:  {{answerNumber}}</b>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+
+<div class="jumbotron">
+    <table>
+        <tr>
+            <td>
+                <button class="btn btn-success" ng-click="addTask(6)" id="6"> +</button>
+            </td>
+
+            <td>  &nbsp;</td>
+            <td> 6.</td>
+            <td>
+                <div ng-controller="MyCtrl6">
+                    <div ng-bind-html="to_trusted(text)"></div>
+
+                    <b> Решение: </b>
+
+                    <div ng-bind-html="to_trusted(answerText)"></div>
+
+
+                    <!--<div ng-bind-html="to_trusteed(resultHTML)"></div>-->
+
+
+                    <!--<div mathjax-bind="answerText"></div>-->
+                    <br>
+                    <b> Числовой ответ:  {{answerNumber}}</b>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+<div class="jumbotron">
+    <table>
+        <tr>
+            <td>
+                <button class="btn btn-success" ng-click="addTask(7)" id="7"> +</button>
+            </td>
+
+            <td>  &nbsp;</td>
+            <td> 7.</td>
+            <td>
+                <div ng-controller="MyCtrl7">
+                    <div ng-bind-html="to_trusted(text)"></div>
+
+                    <b> Решение: </b>
+
+                    <div ng-bind-html="to_trusted(answerText)"></div>
+
+
+                    <!--<div ng-bind-html="to_trusteed(resultHTML)"></div>-->
+
+
+                    <!--<div mathjax-bind="answerText"></div>-->
+                    <br>
+                    <b> Числовой ответ:  {{answerNumber}}</b>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+<div class="jumbotron">
+    <table>
+        <tr>
+            <td>
+                <button class="btn btn-success" ng-click="addTask(8)" id="8"> +</button>
+            </td>
+
+            <td>  &nbsp;</td>
+            <td> 8.</td>
+            <td>
+                <div ng-controller="MyCtrl8">
+                    <div ng-bind-html="to_trusted(text)"></div>
+
+                    <b> Решение: </b>
+
+                    <div ng-bind-html="to_trusted(answerText)"></div>
+
+
+                    <!--<div ng-bind-html="to_trusteed(resultHTML)"></div>-->
+
+
+                    <!--<div mathjax-bind="answerText"></div>-->
+                    <br>
+                    <b> Числовой ответ:  {{answerNumber}}</b>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div class="jumbotron">
+    <table>
+        <tr>
+            <td>
+                <button class="btn btn-success" ng-click="addTask(9)" id="9"> +</button>
+            </td>
+
+            <td>  &nbsp;</td>
+            <td> 9.</td>
+            <td>
+                <div ng-controller="MyCtrl9">
+                    <div ng-bind-html="to_trusted(text)"></div>
+
+                    <b> Решение: </b>
+
+                    <div ng-bind-html="to_trusted(answerText)"></div>
+
+
+                    <!--<div ng-bind-html="to_trusteed(resultHTML)"></div>-->
+
+
+                    <!--<div mathjax-bind="answerText"></div>-->
+                    <br>
+                    <b> Числовой ответ:  {{answerNumber}}</b>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div class="jumbotron">
+    <table>
+        <tr>
+            <td>
+                <button class="btn btn-success" ng-click="addTask(10)" id="10"> +</button>
+            </td>
+
+            <td>  &nbsp;</td>
+            <td> 10.</td>
+            <td>
+                <div ng-controller="MyCtrl10">
+                    <div ng-bind-html="to_trusted(text)"></div>
+
+                    <b> Решение: </b>
+
+                    <div ng-bind-html="to_trusted(answerText)"></div>
+
+
+                    <!--<div ng-bind-html="to_trusteed(resultHTML)"></div>-->
+
+
+                    <!--<div mathjax-bind="answerText"></div>-->
+                    <br>
+                    <b> Числовой ответ:  {{answerNumber}}</b>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+<div class="jumbotron">
+    <table>
+        <tr>
+            <td>
+                <button class="btn btn-success" ng-click="addTask(11)" id="11"> +</button>
+            </td>
+
+            <td>  &nbsp;</td>
+            <td> 11.</td>
+            <td>
+                <div ng-controller="MyCtrl11">
+                    <div ng-bind-html="to_trusted(text)"></div>
+
+                    <b> Решение: </b>
+
+                    <div ng-bind-html="to_trusted(answerText)"></div>
+
+
+                    <!--<div ng-bind-html="to_trusteed(resultHTML)"></div>-->
+
+
+                    <!--<div mathjax-bind="answerText"></div>-->
+                    <br>
+                    <b> Числовой ответ:  {{answerNumber}}</b>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+
+<div class="jumbotron">
+    <table>
+        <tr>
+            <td>
+                <button class="btn btn-success" ng-click="addTask(12)" id="12"> +</button>
+            </td>
+
+            <td>  &nbsp;</td>
+            <td> 12.</td>
+            <td>
+                <div ng-controller="MyCtrl12">
+                    <div ng-bind-html="to_trusted(text)"></div>
+
+                    <b> Решение: </b>
+
+                    <div ng-bind-html="to_trusted(answerText)"></div>
+
+
+                    <!--<div ng-bind-html="to_trusteed(resultHTML)"></div>-->
+
+
+                    <!--<div mathjax-bind="answerText"></div>-->
+                    <br>
+                    <b> Числовой ответ:  {{answerNumber}}</b>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+<div class="jumbotron">
+    <table>
+        <tr>
+            <td>
+                <button class="btn btn-success" ng-click="addTask(13)" id="13"> +</button>
+            </td>
+
+            <td>  &nbsp;</td>
+            <td> 13.</td>
+            <td>
+                <div ng-controller="MyCtrl13">
+                    <div ng-bind-html="to_trusted(text)"></div>
+
+                    <b> Решение: </b>
+
+                    <div ng-bind-html="to_trusted(answerText)"></div>
+
+
+                    <!--<div ng-bind-html="to_trusteed(resultHTML)"></div>-->
+
+
+                    <!--<div mathjax-bind="answerText"></div>-->
+                    <br>
+                    <b> Числовой ответ:  {{answerNumber}}</b>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+<div class="jumbotron">
+    <table>
+        <tr>
+            <td>
+                <button class="btn btn-success" ng-click="addTask(14)" id="14"> +</button>
+            </td>
+
+            <td>  &nbsp;</td>
+            <td> 14.</td>
+            <td>
+                <div ng-controller="MyCtrl14">
+                    <div ng-bind-html="to_trusted(text)"></div>
+
+                    <b> Решение: </b>
+
+                    <div ng-bind-html="to_trusted(answerText)"></div>
+
+
+                    <!--<div ng-bind-html="to_trusteed(resultHTML)"></div>-->
+
+
+                    <!--<div mathjax-bind="answerText"></div>-->
+                    <br>
+                    <b> Числовой ответ:  {{answerNumber}}</b>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+<div class="jumbotron">
+    <table>
+        <tr>
+            <td>
+                <button class="btn btn-success" ng-click="addTask(15)" id="15"> +</button>
+            </td>
+
+            <td>  &nbsp;</td>
+            <td> 15.</td>
+            <td>
+                <div ng-controller="MyCtrl15">
+                    <div ng-bind-html="to_trusted(text)"></div>
+
+                    <b> Решение: </b>
+
+                    <div ng-bind-html="to_trusted(answerText)"></div>
+
+
+                    <!--<div ng-bind-html="to_trusteed(resultHTML)"></div>-->
+
+
+                    <!--<div mathjax-bind="answerText"></div>-->
+                    <br>
+                    <b> Числовой ответ:  {{answerNumber}}</b>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+
+<div class="jumbotron">
+    <table>
+        <tr>
+            <td>
+                <button class="btn btn-success" ng-click="addTask(16)" id="16"> +</button>
+            </td>
+
+            <td>  &nbsp;</td>
+            <td> 16.</td>
+            <td>
+                <div ng-controller="MyCtrl16">
+                    <div ng-bind-html="to_trusted(text)"></div>
+
+                    <b> Решение: </b>
+
+                    <div ng-bind-html="to_trusted(answerText)"></div>
+
+
+                    <!--<div ng-bind-html="to_trusteed(resultHTML)"></div>-->
+
+
+                    <!--<div mathjax-bind="answerText"></div>-->
+                    <br>
+                    <b> Числовой ответ:  {{answerNumber}}</b>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+<div class="jumbotron">
+    <table>
+        <tr>
+            <td>
+                <button class="btn btn-success" ng-click="addTask(17)" id="17"> +</button>
+            </td>
+
+            <td>  &nbsp;</td>
+            <td> 17.</td>
+            <td>
+                <div ng-controller="MyCtrl17">
+                    <div ng-bind-html="to_trusted(text)"></div>
+
+                    <b> Решение: </b>
+
+                    <div ng-bind-html="to_trusted(answerText)"></div>
+
+
+                    <!--<div ng-bind-html="to_trusteed(resultHTML)"></div>-->
+
+
+                    <!--<div mathjax-bind="answerText"></div>-->
+                    <br>
+                    <b> Числовой ответ:  {{answerNumber}}</b>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+
+
+<div class="jumbotron">
+    <table>
+        <tr>
+            <td>
+                <button class="btn btn-success" ng-click="addTask(18)" id="18"> +</button>
+            </td>
+
+            <td>  &nbsp;</td>
+            <td> 18.</td>
+            <td>
+                <div ng-controller="MyCtrl18">
+                    <div ng-bind-html="to_trusted(text)"></div>
+
+                    <b> Решение: </b>
+
+                    <div ng-bind-html="to_trusted(answerText)"></div>
+
+
+                    <!--<div ng-bind-html="to_trusteed(resultHTML)"></div>-->
+
+
+                    <!--<div mathjax-bind="answerText"></div>-->
+                    <br>
+                    <b> Числовой ответ:  {{answerNumber}}</b>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+<div class="jumbotron">
+    <table>
+        <tr>
+            <td>
+                <button class="btn btn-success" ng-click="addTask(19)" id="19"> +</button>
+            </td>
+
+            <td>  &nbsp;</td>
+            <td> 19.</td>
+            <td>
+                <div ng-controller="MyCtrl19">
+                    <div ng-bind-html="to_trusted(text)"></div>
+
+                    <b> Решение: </b>
+
+                    <div ng-bind-html="to_trusted(answerText)"></div>
+
+
+                    <!--<div ng-bind-html="to_trusteed(resultHTML)"></div>-->
+
+
+                    <!--<div mathjax-bind="answerText"></div>-->
+                    <br>
+                    <b> Числовой ответ:  {{answerNumber}}</b>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+<div class="jumbotron">
+    <table>
+        <tr>
+            <td>
+                <button class="btn btn-success" ng-click="addTask(20)" id="20"> +</button>
+            </td>
+
+            <td>  &nbsp;</td>
+            <td> 20.</td>
+            <td>
+                <div ng-controller="MyCtrl20">
+                    <div ng-bind-html="to_trusted(text)"></div>
+
+                    <b> Решение: </b>
+
+                    <div ng-bind-html="to_trusted(answerText)"></div>
+
+
+                    <!--<div ng-bind-html="to_trusteed(resultHTML)"></div>-->
+
+
+                    <!--<div mathjax-bind="answerText"></div>-->
+                    <br>
+                    <b> Числовой ответ:  {{answerNumber}}</b>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+
+
+<br><br><br>
+<div class="jumbotron">
+
+
+    <!--<div ng-init="devs = [{name: 'aa'}, {name: 'nb'}] "></div>-->
+
+
+    <li>Маслова</li>
+    <li>Хрусталёва</li>
+    <li>Бакаев</li>
+    <li>Бирюков</li>
+    <li>Груздев</li>
+    <h2> 13ПИ </h2>
+</div>
+
+
+
+
+</script>
+
+<script type="text/ng-template" id="partials/partial2.html">
+
+    <div ng-controller="printAllTaskCtrl">
+
+
+        <br> <br>
+        <b> Задачи: </b>
+
+        <div ng-bind-html="to_trusted(bigOutput)"></div>
+
+
+        <br> <br> <br> <br> <br>
+
+        Ответы:
+
+        <div ng-bind-html="to_trusted(bigOutput2)"></div>
+
+
+    </div>
+
+
+</script>
+
+
+
+
+<!--<script type="text/ng-template" id="partials/partial2.html">-->
+<!--This is the content of the template-->
+<!--</script>-->
+
+
+<script src="js/services.js"></script>
+<script src="js/controllers.js"></script>
+<script src="js/filters.js"></script>
+<script src="js/directives.js"></script>
+
+<!--<script type="text/ng-template" src="partials/partial1.html"></script>-->
+<!--<script type="text/ng-template" src="partials/partial2.html"></script>-->
+</body>
+</html>
